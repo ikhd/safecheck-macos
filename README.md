@@ -8,31 +8,36 @@
   <a href="#license"><img alt="License" src="https://img.shields.io/badge/license-MIT-green"></a>
 </p>
 
+---
 
-## Features
+## ✨ Features
 
-- **Bilingual UX (Arabic/English)** – prompt at start.
-- **Gatekeeper status** check.
-- **Local artifacts sweep**:
-  - `/tmp` for `run.sh` and `tnt*`
-  - Spotlight & Application Support for `.dat.nosync*`
-  - LaunchAgents/Daemons listing (light triage)
-- **DMG hash check** – compares recursively found `*.dmg` under `Downloads/Desktop` against BrokenStones `badfiles.txt`.
-- **OGF filename hunt** – searches for “Open Gatekeeper friendly” files (incl. mounted volumes under `/Volumes`).
-- **Optional helper** – runs BrokenStones helper script inside `~/Downloads` (configurable).
-- **Rentry IPs match** – fetches known IPs and compares with current `lsof` network connections.
-- **Auto-quarantine** – moves suspicious hits to a timestamped folder.
-- **Comprehensive log** – timestamped file under `~/Desktop/SafeCheck_Logs`.
+- 🌍 **Bilingual UX (Arabic/English)** – language prompt at start
+- 🔒 **Gatekeeper status** check
+- 🗂️ **Local artifacts sweep**  
+  - `/tmp` for `run.sh` and `tnt*`  
+  - Spotlight & Application Support for `.dat.nosync*`  
+  - LaunchAgents/Daemons listing (light triage)  
+- 📦 **DMG hash check** – compare recursively found `*.dmg` against BrokenStones `badfiles.txt`
+- 🕵️ **OGF filename hunt** – searches for *“Open Gatekeeper friendly”* (also inside `/Volumes`)
+- ⚙️ **Optional helper** – runs BrokenStones helper script inside `~/Downloads`
+- 🌐 **Rentry IPs match** – checks active connections against known IPs
+- 🛡️ **Auto-quarantine** – moves suspicious hits to timestamped folder
+- 📝 **Comprehensive logs** – saved under `~/Desktop/SafeCheck_Logs`
 
-> ⚠️ **Research tool**: Intended for triage and awareness. Not a replacement for EDR/AV or professional IR.
+> ⚠️ **Research tool** only — not a replacement for EDR/AV or professional IR.
 
-## Requirements
+---
 
-- macOS 12+ (should work on newer versions too)
+## 🖥️ Requirements
+
+- macOS 12+ (works on newer versions too)
 - `bash`, `curl`, `md5` (or `md5sum`), `lsof`, `file`, `stat`
-- Terminal permissions; for wider coverage you may grant **Full Disk Access** to your terminal app (System Settings → Privacy & Security).
+- Terminal app with **Full Disk Access** (recommended for wider coverage)
 
-## Quick Start
+---
+
+## 🚀 Quick Start
 
 ```bash
 # Clone
@@ -45,7 +50,67 @@ chmod +x SafeCheck_Pro.sh
 # Run
 ./SafeCheck_Pro.sh
 ```
+---
 
+## ⚙️ Configuration
+
+- You can customize behavior by editing variables at the top of the script:
+
+```bash
+SCAN_DIRS=("$HOME/Downloads" "$HOME/Desktop")  # directories to scan recursively
+CHECK_MOUNTED_VOLUMES=true                    # scan /Volumes for OGF
+RUN_BROKENSTONES_SCRIPT=true                  # run BrokenStones helper
+CHECK_RENTRY_IPS=true                         # fetch + check IPs from rentry
+AUTO_QUARANTINE=true                          # move suspicious files automatically
+QUAR_DIR="$HOME/Quarantine_OGF"               # quarantine folder
+LOG_DIR="$HOME/Desktop/SafeCheck_Logs"        # log folder
+BADLIST_URL="https://brokenstones.is/static/scripts/badfiles.txt"
+BROKEN_SCRIPT_URL="https://brokenstones.is/static/scripts/check_badfiles.sh"
+RENTRY_URLS=("https://rentry.co/ogf_malware" "https://rentry.co/ogf_malware_behavior")
+```
+
+---
+
+## ⚠️ Safety Notes & Limitations
+
+- 🔗 **Remote content**: downloads community lists (`badfiles.txt`, rentry IPs) and may run a helper script. *Review URLs before enabling.*  
+- 🕵️ **Heuristics**: names like *“Open Gatekeeper friendly”* are only indicators, not verdicts.  
+- 📦 **No deletion**: suspicious files are moved to quarantine (restore if needed).  
+- 🌐 **Network view**: `lsof` may require elevated privileges to see all processes.  
+
+---
+
+## 🛠️ Roadmap
+
+- `--lang`, `--no-network`, `--read-only` flags (non-interactive mode)  
+- Hardened quarantine (xattrs, immutable)  
+- Codesigned release + Homebrew Tap  
+- Optional JSON output  
+
+---
+
+## 🤝 Contributing
+
+See [CONTRIBUTING.md](CONTRIBUTING.md).  
+Pull requests for new indicators and flags are welcome.  
+⚠️ Please avoid adding destructive actions.  
+
+---
+
+## 🔐 Security
+
+See [SECURITY.md](SECURITY.md).  
+If you discover a vulnerability or data-loss bug, please report it privately.  
+
+---
+
+## 📜 License
+
+Released under the [MIT License](LICENSE).  
+
+**Credits:** Khalid — [Routers.world](https://routers.world) — X: [@REMiX_KSA](https://x.com/REMiX_KSA)
+
+---
 <p align="center">
   <img src="Screenshot.png" alt="SafeCheck sample output" width="700">
 </p>

@@ -36,7 +36,7 @@
 
 ```bash
 # Clone
-git clone https://github.com/<your-user>/safecheck-macos.git
+git clone https://github.com/ikhd/safecheck-macos.git
 cd safecheck-macos
 
 # Make executable

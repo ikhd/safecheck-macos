@@ -29,6 +29,17 @@
 
 ---
 
+## 🆕 What’s New in v1.1
+- Interactive **Verbose Mode** (choose full detail vs. summary).
+- Full **`.app` bundle scanning** with TeamID/Authority/Gatekeeper checks.
+- One-line summaries per app + final statistics (OK/Warning/Quarantined).
+- Skip system volumes in `/Volumes` (optional).
+- Cleaner outputs, improved parsing, unified MD5 handling.
+
+See full [CHANGELOG.md](CHANGELOG.md) for details.
+
+---
+
 ## 🖥️ Requirements
 
 - macOS 12+ (works on newer versions too)

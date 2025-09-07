@@ -2,7 +2,7 @@
 set -euo pipefail
 
 # ───────────────────────────────────────────────
-# SafeCheck_Pro v1.1 — OGF/Poseidon macOS quick scan (DMG/OGF + .app bundles)
+# SafeCheck_Pro v1.2 — OGF/Poseidon macOS quick scan (DMG/OGF + .app bundles)
 # Credits: Khalid | Routers.world | Tw: @REMiX_KSA
 # ───────────────────────────────────────────────
 
@@ -190,8 +190,22 @@ move_to_quarantine() {
   [[ -e "$path" ]] || return 0
   local base; base="$(basename "$path")"
   local dest="$QUAR_DIR/${TS}_$base"
+
+  # If the item is on a mounted volume (likely read-only DMG), copy only.
+  if [[ "$path" == /Volumes/* ]]; then
+    log "🚧 Copied to quarantine (read-only volume): $path -> $dest"
+    cp -R "$path" "$dest" 2>>"$LOG_FILE" || true
+    return 0
+  fi
+
+  # Otherwise try to move; if move fails, copy and (best-effort) remove only if writable.
   log "$(t q_move) $path -> $dest"
-  mv -f "$path" "$dest" 2>>"$LOG_FILE" || { cp -a "$path" "$dest" 2>>"$LOG_FILE"; rm -rf "$path"; }
+  if ! mv -f "$path" "$dest" 2>>"$LOG_FILE"; then
+    cp -a "$path" "$dest" 2>>"$LOG_FILE" || true
+    if [ -w "$path" ]; then
+      rm -rf "$path" 2>>"$LOG_FILE" || true
+    fi
+  fi
 }
 
 assess_file() {

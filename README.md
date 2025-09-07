@@ -36,7 +36,7 @@
 - Skip system volumes in `/Volumes` (optional).
 - Cleaner outputs, improved parsing, unified MD5 handling.
 
-See full [CHANGELOG.md](CHANGELOG.md) for details.
+See full [CHANGELOG](https://github.com/ikhd/safecheck-macos/releases) for details.
 
 ---
 
